@@ -17,9 +17,32 @@ var App = {
       MessagesView.initialize();
     });
 
-    $('.addRoom').click(function() { RoomsView.renderRoom() });
+    // handle new room creation
+    $('#rooms button').click(function() {
+      let newRoomName = $('.addroom').val();
+      Rooms.add(newRoomName);
+      RoomsView.renderRoom(newRoomName);
+      $('.addroom').val('');
+    });
 
+    // handle new message submissions
+    $('#send > input.submit').click(function() {
+      let message = {
+        text: $('#message').val(),
+        username: App.username,
+        roomName: $('#rooms select').val()
+      }
+      $('#message').val('')
+      Parse.create(message)
+     });
 
+    // fetch new messages periodically
+    setInterval(function() {
+       App.fetch(function() {
+        Messages.cleanUp();
+        MessagesView.initialize();
+      })
+     }, 250);
   },
 
   fetch: function(callback = ()=>{}) {

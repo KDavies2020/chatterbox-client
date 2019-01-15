@@ -7,7 +7,7 @@ var MessagesView = {
     for (var key in Messages.storage) {
      //console.log(Messages.storage[key])
      let message = Messages.storage[key];
-     MessagesView.$chats.append(MessageView.render(message));
+     MessagesView.$chats.prepend(MessageView.render(message));
     }
 
     // Messages.storage.forEach((messageKey) => {
@@ -18,7 +18,6 @@ var MessagesView = {
 
   renderMessage: function(message) {
     messages = Parse.readAll(data => data);
-    console.log(messages);
     MessagesView.$chats.append(`<div class = message> ${message.text} </div>` )
   }
 

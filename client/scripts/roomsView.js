@@ -13,14 +13,16 @@ var RoomsView = {
     }
   },
 
-  renderRoom: function() {
-
-      let newRoomName = $('.addroom').val();
-      console.log(newRoomName);
-
-      if (!Rooms[newRoomName]) {
-        RoomsView.$select.append('<option value=' + newRoomName + '>' + newRoomName + '</option>')
+  renderRoom: function(newRoomName) {
+    let roomAlreadyExists = false;
+    $('#rooms select option').each(function(index, element) {
+      if ($(this).val() === newRoomName) {
+        roomAlreadyExists = true;
       }
-      $('.addroom').val('');
+    });
+
+    if (!roomAlreadyExists) {
+      $('#rooms select').append('<option value=' + newRoomName + '>' + newRoomName + '</option>')
     }
+  }
 };
