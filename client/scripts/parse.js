@@ -8,14 +8,16 @@ var Parse = {
       type: 'POST',
       data: JSON.stringify(message),
       contentType: 'application/json',
-      });
+    });
   },
 
   readAll: function(successCB, errorCB = null) {
     $.ajax({
       url: Parse.server,
       type: 'GET',
-      data: { order: '-createdAt' },
+      data: {
+        order: '-createdAt'
+      },
       contentType: 'application/json',
       success: successCB,
       error: errorCB || function(error) {

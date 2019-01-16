@@ -32,35 +32,35 @@ var App = {
         text: $('#message').val(),
         username: App.username,
         roomname: $('#rooms select').val()
-      }
-      $('#message').val('')
-      Parse.create(message)
+      };
+      $('#message').val('');
+      Parse.create(message);
 
       App.fetch(function() {
         Messages.cleanUp();
         Messages.sortStorage();
         MessagesView.filterByRoom($('#rooms select').val());
       });
-     });
+    });
     // when a different room is selected from dropdown, move the user there
     $('#rooms select').change(function() {
       MessagesView.$chats.html('');
       MessagesView.filterByRoom($('#rooms select').val());
-    })
+    });
 
     // fetch new messages periodically
     setInterval(function() {
-       App.fetch(function() {
+      App.fetch(function() {
         Messages.cleanUp();
         Messages.sortStorage();
         MessagesView.filterByRoom($('#rooms select').val());
-      })
-     }, 10000);
+      });
+    }, 10000);
 
 
   },
 
-  fetch: function(callback = ()=>{}) {
+  fetch: function(callback = () => {}) {
     Parse.readAll((data) => {
       // store the initial data into Messages.storage
       data.results.map((message) => {

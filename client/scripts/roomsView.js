@@ -8,7 +8,7 @@ var RoomsView = {
       var roomName = Messages.storage[key].roomname;
       if (roomName && !Rooms[roomName]) {
         Rooms[roomName] = true;
-        RoomsView.$select.append('<option value=' + roomName.substring(0,16) + '>' + roomName.substring(0,16) + '</option>');
+        RoomsView.$select.append('<option value=' + roomName.substring(0, 16) + '>' + roomName.substring(0, 16) + '</option>');
       }
     }
   },
@@ -22,7 +22,7 @@ var RoomsView = {
     });
 
     if (!roomAlreadyExists) {
-      $('#rooms select').append('<option value=' + newRoomName.substring(0,16) + '>' + newRoomName.substring(0,16) + '</option>')
+      $('#rooms select').append('<option value=' + newRoomName.substring(0, 16) + '>' + newRoomName.substring(0, 16) + '</option>');
     }
   }
 
