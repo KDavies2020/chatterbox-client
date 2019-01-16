@@ -3,22 +3,36 @@ var MessagesView = {
   $chats: $('#chats'),
 
   initialize: function() {
-    //MessagesView.$chats.ready((event) => console.log('click!'));
-    for (var key in Messages.storage) {
-     //console.log(Messages.storage[key])
-     let message = Messages.storage[key];
-     MessagesView.$chats.prepend(MessageView.render(message));
+    for (var i = 0; i < Messages.sorted.length; i++) {
+      var key = Messages.sorted[i].objectId
+      let message = Messages.storage[key];
+      MessagesView.renderMessage(message);
     }
-
-    // Messages.storage.forEach((messageKey) => {
-    //   Messageview.render(Messages.storage[messageKey]);
-    //   console.log(Messages.storage[messageKey]);
-    // });
   },
 
   renderMessage: function(message) {
-    messages = Parse.readAll(data => data);
-    MessagesView.$chats.append(`<div class = message> ${message.text} </div>` )
+    // Add message to DOM
+    let id = "#" + message['objectId'];
+    if ($(id).length === 0) {
+      MessagesView.$chats.prepend(MessageView.render(message));
+      // Add click handler to DOM to manage friends
+      $(id).click(function() {
+        let userName = $(this).find('.username').text().trim();
+        Friends.addFriend(userName)
+        Friends.styleMyFriend();
+        console.log(Friends.list);
+      });
+    }
+  },
+
+  filterByRoom: function(roomName) {
+    for (var i = 0; i < Messages.sorted.length; i++) {
+      var key = Messages.sorted[i].objectId;
+      let message = Messages.storage[key];
+      if (Messages.storage[key].roomname === roomName) {
+        MessagesView.renderMessage(message);
+      }
+    }
   }
 
 };

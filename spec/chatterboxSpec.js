@@ -84,7 +84,7 @@ describe('chatterbox', function() {
 
   describe('events', function() {
     it('should add a friend upon clicking their username', function() {
-      sinon.spy(Friends, 'toggleStatus');
+      sinon.spy(Friends, 'addFriend');
 
       App.initialize();
       MessagesView.renderMessage({
@@ -93,9 +93,9 @@ describe('chatterbox', function() {
         roomname: 'lobby'
       });
       $('#chats').find('.username').trigger('click');
-      expect(Friends.toggleStatus.called).to.be.true;
+      expect(Friends.addFriend.called).to.be.true;
 
-      Friends.toggleStatus.restore();
+      Friends.addFriend.restore();
     });
 
     it('should add a room when clicking add', function() {
@@ -116,7 +116,7 @@ describe('chatterbox', function() {
 
       App.initialize();
       $('#message').val('Why so many Mel Brooks quotes?');
-      $('form .submit').trigger('submit');
+      $('form .submit').trigger('click');
       expect(Parse.create.called).to.be.true;
 
       Parse.create.restore();

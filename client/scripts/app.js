@@ -11,6 +11,7 @@ var App = {
     App.startSpinner();
     App.fetch(function() {
       Messages.cleanUp();
+      Messages.sortStorage();
       App.stopSpinner();
       FormView.initialize();
       RoomsView.initialize();
@@ -30,19 +31,33 @@ var App = {
       let message = {
         text: $('#message').val(),
         username: App.username,
-        roomName: $('#rooms select').val()
+        roomname: $('#rooms select').val()
       }
       $('#message').val('')
       Parse.create(message)
+
+      App.fetch(function() {
+        Messages.cleanUp();
+        Messages.sortStorage();
+        MessagesView.filterByRoom($('#rooms select').val());
+      });
      });
+    // when a different room is selected from dropdown, move the user there
+    $('#rooms select').change(function() {
+      MessagesView.$chats.html('');
+      MessagesView.filterByRoom($('#rooms select').val());
+    })
 
     // fetch new messages periodically
     setInterval(function() {
        App.fetch(function() {
         Messages.cleanUp();
-        MessagesView.initialize();
+        Messages.sortStorage();
+        MessagesView.filterByRoom($('#rooms select').val());
       })
-     }, 250);
+     }, 10000);
+
+
   },
 
   fetch: function(callback = ()=>{}) {

@@ -4,11 +4,11 @@ var RoomsView = {
   $select: $('#rooms select'),
 
   initialize: function() {
-    for (key in Messages.storage) {
+    for (var key in Messages.storage) {
       var roomName = Messages.storage[key].roomname;
       if (roomName && !Rooms[roomName]) {
         Rooms[roomName] = true;
-        RoomsView.$select.append('<option value=' + roomName + '>' + roomName + '</option>');
+        RoomsView.$select.append('<option value=' + roomName.substring(0,16) + '>' + roomName.substring(0,16) + '</option>');
       }
     }
   },
@@ -22,7 +22,8 @@ var RoomsView = {
     });
 
     if (!roomAlreadyExists) {
-      $('#rooms select').append('<option value=' + newRoomName + '>' + newRoomName + '</option>')
+      $('#rooms select').append('<option value=' + newRoomName.substring(0,16) + '>' + newRoomName.substring(0,16) + '</option>')
     }
   }
+
 };
